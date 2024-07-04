@@ -7,7 +7,7 @@ import 'HabitPages/add_habit_page.dart';
 import 'HabitPages/habit_detail_page.dart';
 
 class StartPage extends StatefulWidget {
-  const StartPage({Key? key}) : super(key: key);
+  const StartPage({super.key});
 
   @override
   State<StartPage> createState() => _StartPageState();
@@ -55,6 +55,7 @@ class _StartPageState extends State<StartPage> {
             onDismissed: (_) {
               setState(() {
                 _habits.removeAt(index);
+                _saveHabits(); // Save habits after one is removed
               });
             },
             background: Container(color: Colors.red),
@@ -66,6 +67,7 @@ class _StartPageState extends State<StartPage> {
                 onPressed: habit.isDoneToday() ? null : () {
                   setState(() {
                     habit.markDone();
+                    _saveHabits(); // Save habits after marking one as done
                   });
                 },
               ),
@@ -86,10 +88,11 @@ class _StartPageState extends State<StartPage> {
           if (newHabit != null) {
             setState(() {
               _habits.add(newHabit);
+              _saveHabits(); // Save habits after adding a new one
             });
           }
         },
-        child: const Icon(Icons.add),
+        child: Icon(Icons.add),
       ),
     );
   }
