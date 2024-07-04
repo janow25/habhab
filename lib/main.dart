@@ -1,6 +1,6 @@
+// Importing necessary Flutter packages
 import 'package:flutter/material.dart';
-
-/// Flutter code sample for [BottomNavigationBar].
+import 'start.dart';
 
 void main() => runApp(const HabHab());
 
@@ -9,8 +9,8 @@ class HabHab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: BottomNavigationBarMenu(),
+    return MaterialApp(
+      home: const BottomNavigationBarMenu(),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -20,32 +20,17 @@ class BottomNavigationBarMenu extends StatefulWidget {
   const BottomNavigationBarMenu({super.key});
 
   @override
-  State<BottomNavigationBarMenu> createState() =>
-      _BottomNavigationBarMenuState();
+  State<BottomNavigationBarMenu> createState() => _BottomNavigationBarMenuState();
 }
 
-class _BottomNavigationBarMenuState
-    extends State<BottomNavigationBarMenu> {
+class _BottomNavigationBarMenuState extends State<BottomNavigationBarMenu> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Shop',
-      style: optionStyle,
-    ),
-    Text(
-      'Profile',
-      style: optionStyle,
-    ),
-    Text(
-      'Settings',
-      style: optionStyle,
-    ),
+
+  static const List<Widget> _pages = <Widget>[
+    StartPage(),
+    ShopPage(),
+    ProfilePage(),
+    SettingsPage(),
   ];
 
   void _onItemTapped(int index) {
@@ -57,17 +42,8 @@ class _BottomNavigationBarMenuState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('HabHab',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-          ),
-        ),
-        backgroundColor: Colors.purple[400],
-      ),
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: _pages.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -95,5 +71,35 @@ class _BottomNavigationBarMenuState
         onTap: _onItemTapped,
       ),
     );
+  }
+}
+
+class ShopPage extends StatelessWidget {
+  const ShopPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // Implementation for Shop Page
+    return Container(); // Placeholder for actual content
+  }
+}
+
+class ProfilePage extends StatelessWidget {
+  const ProfilePage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // Implementation for Profile Page
+    return Container(); // Placeholder for actual content
+  }
+}
+
+class SettingsPage extends StatelessWidget {
+  const SettingsPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // Implementation for Settings Page
+    return Container(); // Placeholder for actual content
   }
 }
