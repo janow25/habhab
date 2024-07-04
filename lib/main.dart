@@ -2,30 +2,30 @@ import 'package:flutter/material.dart';
 
 /// Flutter code sample for [BottomNavigationBar].
 
-void main() => runApp(const BottomNavigationBarExampleApp());
+void main() => runApp(const HabHab());
 
-class BottomNavigationBarExampleApp extends StatelessWidget {
-  const BottomNavigationBarExampleApp({super.key});
+class HabHab extends StatelessWidget {
+  const HabHab({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: BottomNavigationBarExample(),
+      home: BottomNavigationBarMenu(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
-class BottomNavigationBarExample extends StatefulWidget {
-  const BottomNavigationBarExample({super.key});
+class BottomNavigationBarMenu extends StatefulWidget {
+  const BottomNavigationBarMenu({super.key});
 
   @override
-  State<BottomNavigationBarExample> createState() =>
-      _BottomNavigationBarExampleState();
+  State<BottomNavigationBarMenu> createState() =>
+      _BottomNavigationBarMenuState();
 }
 
-class _BottomNavigationBarExampleState
-    extends State<BottomNavigationBarExample> {
+class _BottomNavigationBarMenuState
+    extends State<BottomNavigationBarMenu> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
