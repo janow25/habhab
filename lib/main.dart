@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'start.dart';
 import 'shop.dart';
+import 'profile.dart';
+import 'model/level_system.dart';
 
 void main() => runApp(const HabHab());
 
@@ -27,10 +29,17 @@ class BottomNavigationBarMenu extends StatefulWidget {
 class _BottomNavigationBarMenuState extends State<BottomNavigationBarMenu> {
   int _selectedIndex = 0;
 
+  @override
+  void initState() {
+    super.initState();
+    LevelSystem.setContext(context); // Set the context for LevelSystem
+    LevelSystem.init(); // Initialize LevelSystem
+  }
+
   static const List<Widget> _pages = <Widget>[
     StartPage(),
     ShopPage(),
-    ProfilePage(),
+    ProfilePage(), // Adjusted to not require LevelSystem instance
     SettingsPage(),
   ];
 
@@ -72,16 +81,6 @@ class _BottomNavigationBarMenuState extends State<BottomNavigationBarMenu> {
         onTap: _onItemTapped,
       ),
     );
-  }
-}
-
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    // Implementation for Profile Page
-    return Container(); // Placeholder for actual content
   }
 }
 

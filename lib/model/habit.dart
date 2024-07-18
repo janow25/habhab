@@ -1,3 +1,5 @@
+import 'package:habhab/model/level_system.dart';
+
 class Habit {
   String name;
   String interval;
@@ -22,6 +24,9 @@ class Habit {
     DateTime now = DateTime.now();
     DateTime today = DateTime(now.year, now.month, now.day);
     completedDates.add(today);
+
+    LevelSystem.init();
+    LevelSystem.addXp(10);
   }
 
   bool isDoneToday() {
