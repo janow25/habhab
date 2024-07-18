@@ -74,27 +74,35 @@ class _ShopPageState extends State<ShopPage> {
     _addCoins(10); // Add 10 coins
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Shop'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Coins: $_coins'), // Display the current coin count
-            ElevatedButton(
-              onPressed: _buyCheatDay,
-              child: Text('Buy Cheat Day (10 Coins)'),
-            ),
-
-            ElevatedButton(onPressed: _addSomeCoins, child: Text('Get coins'))
-            // Add more shop items or functionality here
-          ],
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      title: Text('Shop'),
+      actions: [
+        Padding(
+          padding: EdgeInsets.only(right: 20.0),
+          child: Center(child: Text('Coins: $_coins')), // Display the coin count here
         ),
-      ),
-    );
-  }
+      ],
+    ),
+    body: ListView(
+      children: [
+        ListTile(
+          title: Text('Buy Cheat Day'),
+          subtitle: Text('10 Coins'), // Display the price here
+          onTap: _buyCheatDay,
+          trailing: Icon(Icons.shopping_cart),
+        ),
+        ListTile(
+          title: Text('Get Coins'),
+          subtitle: Text('Free'), // Example of a free item
+          onTap: _addSomeCoins,
+          trailing: Icon(Icons.monetization_on),
+        ),
+        // Add more shop items as ListTiles here with their prices in the subtitle
+      ],
+    ),
+  );
+}
 }
