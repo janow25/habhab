@@ -58,13 +58,12 @@ class _StartPageState extends State<StartPage> {
                 _saveHabits(); // Save habits after one is removed
               });
             },
-            background: Container(color: Colors.red),
             child: ListTile(
               title: Text(habit.name),
               subtitle: Text('Interval: ${habit.interval}, Streak: ${habit.getStreak()} days'),
-              trailing: IconButton(
-                icon: Icon(Icons.check, color: habit.isDoneToday() ? Colors.green : null),
-                onPressed: habit.isDoneToday() ? null : () {
+              trailing: habit.isDone() ? null : IconButton(
+                icon: const Icon(Icons.check),
+                onPressed: habit.isDone() ? null : () {
                   setState(() {
                     habit.markDone();
                     _saveHabits(); // Save habits after marking one as done
@@ -75,6 +74,7 @@ class _StartPageState extends State<StartPage> {
                 context,
                 MaterialPageRoute(builder: (context) => HabitDetailPage(habit: habit)),
               ),
+              tileColor: habit.isDone() ? Colors.green : null,
             ),
           );
         },

@@ -11,16 +11,19 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    // Ensure LevelSystem is initialized before accessing its properties
+    // Assuming LevelSystem has a method to check if it's initialized and a method to get current XP
+    // These parts might need to be adjusted based on the actual implementation of LevelSystem
     if (!LevelSystem.isInitialized) {
       return Scaffold(
         body: Center(child: CircularProgressIndicator()), // Loading indicator
       );
     }
 
-    // Calculate the progress towards the next level
-    int xpForNextLevel = LevelSystem.level * 10;
-    double progress = LevelSystem.xp / xpForNextLevel;
+    // Use the new methods for level and XP calculations
+    int currentLevel = LevelSystem.calculateLevel(LevelSystem.xp);
+    int xpNeededForNextLevel = LevelSystem.xpForNextLevel();
+    int currentLevelXP = LevelSystem.currentLevelProgress();
+    double progress = currentLevelXP / (xpNeededForNextLevel + currentLevelXP).toDouble();
 
     return Scaffold(
       appBar: AppBar(
@@ -30,7 +33,7 @@ class _ProfilePageState extends State<ProfilePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('Level: ${LevelSystem.level}', style: TextStyle(fontSize: 24)),
+            Text('Level: $currentLevel', style: TextStyle(fontSize: 24)),
             SizedBox(height: 20),
             LinearProgressIndicator(
               value: progress,
@@ -39,7 +42,16 @@ class _ProfilePageState extends State<ProfilePage> {
               minHeight: 20,
             ),
             SizedBox(height: 20),
-            Text('XP: ${LevelSystem.xp} / $xpForNextLevel', style: TextStyle(fontSize: 16)),
+            Text('XP: $currentLevelXP / ${xpNeededForNextLevel + currentLevelXP}', style: TextStyle(fontSize: 16)),
+            //test button to add xp
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  LevelSystem.addXp(10);
+                });
+              },
+              child: Text('Add XP'),
+            ),
           ],
         ),
       ),

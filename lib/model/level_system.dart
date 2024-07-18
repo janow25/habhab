@@ -1,5 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 class LevelSystem {
   static int _xp = 0; // User's current XP
@@ -56,11 +57,26 @@ class LevelSystem {
     }
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt('xp', _xp);
+
+    print('got XP: $amount');
   }
 
-  // Calculate level based on XP
+  // Improved level calculation using a quadratic formula
   static int calculateLevel(int xp) {
-    return 1 + xp ~/ 10; // Integer division discards remainder
+    return 1 + ((-1 + sqrt(1 + 8 * xp / 100)) / 2).floor();
+  }
+
+  // Calculate XP needed for the next level
+  static int xpForNextLevel() {
+    int nextLevel = _level + 1;
+    // Inverse of calculateLevel formula to find XP needed for next level
+    return (100 * (nextLevel * (nextLevel - 1) / 2)).ceil() - _xp;
+  }
+
+  // Calculate current level progress
+  static int currentLevelProgress() {
+    int xpForCurrentLevel = (100 * (_level * (_level - 1) / 2)).ceil();
+    return _xp - xpForCurrentLevel;
   }
 
   // OnLevelUp event handler
@@ -71,5 +87,22 @@ class LevelSystem {
     ScaffoldMessenger.of(_context).showSnackBar(
       SnackBar(content: Text('You reached Level $newLevel!')),
     );
+
+    _addCoins(10 * (newLevel-1)); // Reward the user with 10 coins on level up
+  }
+
+  static void _addCoins(int amount) async {
+    final prefs = await SharedPreferences.getInstance();
+    var coins = prefs.getInt('coins') ?? 0;
+    coins += amount; // Add the specified amount of coins
+    await prefs.setInt('coins', coins);
+  }
+
+  static void reset() async {
+    _xp = 0;
+    _level = 1;
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('xp', _xp);
   }
 }

@@ -21,18 +21,35 @@ class Habit {
       );
 
   void markDone() {
+    if (isDone()) return;
+
     DateTime now = DateTime.now();
     DateTime today = DateTime(now.year, now.month, now.day);
     completedDates.add(today);
 
-    LevelSystem.init();
-    LevelSystem.addXp(10);
+    // Assuming LevelSystem.init() is asynchronous and returns a Future
+    LevelSystem.init().then((_) {
+      LevelSystem.addXp(10); // Assuming addXp is also asynchronous
+    });
   }
 
-  bool isDoneToday() {
+  bool isDone() {
     DateTime now = DateTime.now();
     DateTime today = DateTime(now.year, now.month, now.day);
-    return completedDates.contains(today);
+
+    if (interval.toLowerCase() == 'daily') {
+      return completedDates.contains(today);
+    } else if (interval.toLowerCase() == 'weekly') {
+      // Find the first day of the week (assuming Sunday as the first day)
+      DateTime startOfWeek = today.subtract(Duration(days: today.weekday - 1));
+      // Check if any date in the completedDates falls within this week
+      return completedDates.any((date) {
+        return date.isAfter(startOfWeek.subtract(const Duration(days: 1))) && date.isBefore(startOfWeek.add(const Duration(days: 7)));
+      });
+    } else {
+      // Default to false if intervalType is not recognized
+      return false;
+    }
   }
 
   int getStreak() {

@@ -4,6 +4,7 @@ import 'start.dart';
 import 'shop.dart';
 import 'profile.dart';
 import 'model/level_system.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() => runApp(const HabHab());
 
@@ -90,6 +91,29 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Implementation for Settings Page
-    return Container(); // Placeholder for actual content
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Settings'),
+      ),
+      body: ListView(
+              children: [
+                const ListTile(
+                  title: Text('Reset Level'),
+                  onTap: LevelSystem.reset, // Reset the level
+                  trailing: Icon(Icons.refresh),
+                ),
+                ListTile(
+                  title: const Text('Reset Coins'),
+                  onTap: resetCoins, // Add 10 coins
+                  trailing: const Icon(Icons.refresh),
+                ),
+              ],
+            ),
+    );
+  }
+
+  void resetCoins() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('coins', 0);
   }
 }

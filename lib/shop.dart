@@ -54,9 +54,23 @@ class _ShopPageState extends State<ShopPage> {
   void _buyCheatDay() {
     // Example: Buying a Cheat Day costs 10 coins
     if (_coins >= 10) {
+      var usedItem = false;
       for (var habit in _habits) {
-        habit.markDone();
+        if (!habit.isDone()) {
+          habit.markDone();
+          usedItem = true;
+        }
       }
+      
+      if (!usedItem) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('All habits are already done today!')),
+        );
+        return;
+      }
+
+      _saveHabits(); // Save habits after marking them as done
+
       _addCoins(-10); // Deduct 10 coins for the purchase
       // Optionally, save habits if they are modified
       ScaffoldMessenger.of(context).showSnackBar(
@@ -72,6 +86,12 @@ class _ShopPageState extends State<ShopPage> {
 
   void _addSomeCoins() {
     _addCoins(10); // Add 10 coins
+  }
+
+  void _saveHabits() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String habitsJson = jsonEncode(_habits.map((habit) => habit.toJson()).toList());
+    await prefs.setString('habits', habitsJson);
   }
 
 @override
