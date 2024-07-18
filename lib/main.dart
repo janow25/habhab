@@ -1,6 +1,7 @@
 // Importing necessary Flutter packages
 import 'package:flutter/material.dart';
 import 'start.dart';
+import 'shop.dart';
 
 void main() => runApp(const HabHab());
 
@@ -71,16 +72,6 @@ class _BottomNavigationBarMenuState extends State<BottomNavigationBarMenu> {
         onTap: _onItemTapped,
       ),
     );
-  }
-}
-
-class ShopPage extends StatelessWidget {
-  const ShopPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    // Implementation for Shop Page
-    return Container(); // Placeholder for actual content
   }
 }
 
