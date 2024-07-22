@@ -52,8 +52,18 @@ class _ShopPageState extends State<ShopPage> {
   }
 
   void _buyCheatDay() {
-    // Example: Buying a Cheat Day costs 10 coins
-    if (_coins >= 10) {
+    const costs = 10;
+
+    if (_coins >= costs) {
+
+      if (_habits.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('No habits found!')),
+        );
+        return;
+      }
+
+      // Mark all habits as done
       var usedItem = false;
       for (var habit in _habits) {
         if (!habit.isDone()) {
@@ -62,6 +72,7 @@ class _ShopPageState extends State<ShopPage> {
         }
       }
       
+      // If no habits were marked as done, show a message
       if (!usedItem) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('All habits are already done today!')),
@@ -71,8 +82,8 @@ class _ShopPageState extends State<ShopPage> {
 
       _saveHabits(); // Save habits after marking them as done
 
-      _addCoins(-10); // Deduct 10 coins for the purchase
-      // Optionally, save habits if they are modified
+      _addCoins(-costs); // Remove 10 coins for the purchase
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Cheat Day purchased! All habits marked as done for today.')),
       );
