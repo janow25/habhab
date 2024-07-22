@@ -24,7 +24,8 @@ class BottomNavigationBarMenu extends StatefulWidget {
   const BottomNavigationBarMenu({super.key});
 
   @override
-  State<BottomNavigationBarMenu> createState() => _BottomNavigationBarMenuState();
+  State<BottomNavigationBarMenu> createState() =>
+      _BottomNavigationBarMenuState();
 }
 
 class _BottomNavigationBarMenuState extends State<BottomNavigationBarMenu> {
@@ -96,19 +97,73 @@ class SettingsPage extends StatelessWidget {
         title: const Text('Settings'),
       ),
       body: ListView(
-              children: [
-                const ListTile(
-                  title: Text('Reset Level'),
-                  onTap: LevelSystem.reset, // Reset the level
-                  trailing: Icon(Icons.refresh),
-                ),
-                ListTile(
-                  title: const Text('Reset Coins'),
-                  onTap: resetCoins, // Add 10 coins
-                  trailing: const Icon(Icons.refresh),
-                ),
-              ],
-            ),
+        children: [
+          const ListTile(
+            title: Text('Reset Level'),
+            onTap: LevelSystem.reset, // Reset the level
+            trailing: Icon(Icons.refresh),
+          ),
+          ListTile(
+            title: const Text('Reset Coins'),
+            onTap: resetCoins, // Add 10 coins
+            trailing: const Icon(Icons.refresh),
+          ),
+          ListTile(
+            title: const Text('Notification Settings'),
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('Notification Settings'),
+                    content: Column(
+                      children: [
+                        CheckboxListTile(
+                          title: const Text('Enable Notifications'),
+                          value: false, // Replace with actual value
+                          onChanged: (bool? value) {
+                            // TODO: Implement logic to handle checkbox value change
+                          },
+                        ),
+                        CheckboxListTile(
+                          title: const Text('Enable Sound'),
+                          value: false, // Replace with actual value
+                          onChanged: (bool? value) {
+                            // TODO: Implement logic to handle checkbox value change
+                          },
+                        ),
+                        CheckboxListTile(
+                          title: const Text('Enable Vibration'),
+                          value: false, // Replace with actual value
+                          onChanged: (bool? value) {
+                            // TODO: Implement logic to handle checkbox value change
+                          },
+                        ),
+                      ],
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Close'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          // TODO: Implement logic to save notification settings
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Save'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            trailing: const Icon(Icons.notifications),
+          ),
+        ],
+      ),
     );
   }
 
