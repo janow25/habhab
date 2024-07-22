@@ -29,7 +29,7 @@ class Habit {
 
     // Assuming LevelSystem.init() is asynchronous and returns a Future
     LevelSystem.init().then((_) {
-      LevelSystem.addXp(10); // Assuming addXp is also asynchronous
+      LevelSystem.addXp(10 * getStreak() ~/ 10); // Assuming addXp is also asynchronous
     });
   }
 
