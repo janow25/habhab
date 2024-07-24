@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-import 'model/habit.dart'; // Assuming this is the file name where Habit class is defined
+import 'model/habit.dart';
 
 class ShopPage extends StatefulWidget {
   const ShopPage({super.key});
@@ -12,13 +12,13 @@ class ShopPage extends StatefulWidget {
 
 class _ShopPageState extends State<ShopPage> {
   List<Habit> _habits = [];
-  int _coins = 0; // Step 1: Add a coin variable
+  int _coins = 0;
 
   @override
   void initState() {
     super.initState();
     _loadAllHabits();
-    _loadCoins(); // Load coins when the widget is initialized
+    _loadCoins();
   }
 
   void _loadAllHabits() async {
@@ -35,13 +35,14 @@ class _ShopPageState extends State<ShopPage> {
   void _loadCoins() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _coins = prefs.getInt('coins') ?? 0; // Load coins, default to 0 if not found
+      // Load coins, defaults to 0
+      _coins = prefs.getInt('coins') ?? 0;
     });
   }
 
   void _addCoins(int amount) {
     setState(() {
-      _coins += amount; // Add the specified amount of coins
+      _coins += amount;
     });
     _saveCoins();
   }
@@ -58,7 +59,7 @@ class _ShopPageState extends State<ShopPage> {
 
       if (_habits.isEmpty) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('No habits found!')),
+          const SnackBar(content: Text('No habits found!')),
         );
         return;
       }
@@ -75,7 +76,7 @@ class _ShopPageState extends State<ShopPage> {
       // If no habits were marked as done, show a message
       if (!usedItem) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('All habits are already done today!')),
+          const SnackBar(content: Text('All habits are already done today!')),
         );
         return;
       }
@@ -85,12 +86,12 @@ class _ShopPageState extends State<ShopPage> {
       _addCoins(-costs); // Remove 10 coins for the purchase
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Cheat Day purchased! All habits marked as done for today.')),
+        const SnackBar(content: Text('Cheat Day purchased! All habits marked as done for today.')),
       );
     } else {
       // Show an error or a message indicating insufficient coins
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Insufficient coins!')),
+        const SnackBar(content: Text('Insufficient coins!')),
       );
     }
   }
@@ -109,29 +110,29 @@ class _ShopPageState extends State<ShopPage> {
 Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(
-      title: Text('Shop'),
+      title: const Text('Shop'),
       actions: [
         Padding(
-          padding: EdgeInsets.only(right: 20.0),
-          child: Center(child: Text('Coins: $_coins')), // Display the coin count here
+          padding: const EdgeInsets.only(right: 20.0),
+          child: Center(child: Text('Coins: $_coins')),
         ),
       ],
     ),
     body: ListView(
       children: [
         ListTile(
-          title: Text('Buy Cheat Day'),
-          subtitle: Text('10 Coins'), // Display the price here
+          title: const Text('Buy Cheat Day'),
+          subtitle: const Text('10 Coins'),
           onTap: _buyCheatDay,
-          trailing: Icon(Icons.shopping_cart),
+          trailing: const Icon(Icons.shopping_cart),
         ),
+        // Free coins for testing
         ListTile(
-          title: Text('Get Coins'),
-          subtitle: Text('Free'), // Example of a free item
+          title: const Text('Get Coins'),
+          subtitle: const Text('Free'),
           onTap: _addSomeCoins,
-          trailing: Icon(Icons.monetization_on),
+          trailing: const Icon(Icons.monetization_on),
         ),
-        // Add more shop items as ListTiles here with their prices in the subtitle
       ],
     ),
   );

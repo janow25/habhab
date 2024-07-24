@@ -42,7 +42,7 @@ class LevelSystem {
   // Getter for initialization status
   static bool get isInitialized => _isInitialized;
 
-  // Method to add XP and automatically update the level if necessary
+  // Method to add XP
   static Future<void> addXp(int amount) async {
     if (!_isInitialized) {
       throw Exception("LevelSystem not initialized. Call init() first.");
@@ -81,20 +81,22 @@ class LevelSystem {
 
   // OnLevelUp event handler
   static void OnLevelUp(int newLevel) {
-    print('Levelup $newLevel!');
+    var rewardCoins = 10 * (newLevel-1);
+
+    print('Levelup $newLevel! Reward: $rewardCoins coins');
 
     // Show an error or a message indicating insufficient coins
     ScaffoldMessenger.of(_context).showSnackBar(
-      SnackBar(content: Text('You reached Level $newLevel!')),
+      SnackBar(content: Text('You reached Level $newLevel and got $rewardCoins coins!')),
     );
 
-    _addCoins(10 * (newLevel-1)); // Reward the user with 10 coins on level up
+    _addCoins(rewardCoins);
   }
 
   static void _addCoins(int amount) async {
     final prefs = await SharedPreferences.getInstance();
     var coins = prefs.getInt('coins') ?? 0;
-    coins += amount; // Add the specified amount of coins
+    coins += amount; // Add coins
     await prefs.setInt('coins', coins);
   }
 

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:habhab/model/habit.dart';
 
 class AddHabitPage extends StatefulWidget {
+  const AddHabitPage({super.key});
+
   @override
   _AddHabitPageState createState() => _AddHabitPageState();
 }

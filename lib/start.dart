@@ -51,6 +51,7 @@ class _StartPageState extends State<StartPage> {
         itemBuilder: (context, index) {
           final habit = _habits[index];
           return Dismissible(
+            background: Container(color: Colors.red),
             key: Key(habit.name),
             onDismissed: (_) {
               setState(() {
@@ -92,7 +93,7 @@ class _StartPageState extends State<StartPage> {
             });
           }
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }

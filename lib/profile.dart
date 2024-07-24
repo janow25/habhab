@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'model/level_system.dart'; // Ensure this import is correct
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  const ProfilePage({super.key});
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -11,15 +11,14 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    // Assuming LevelSystem has a method to check if it's initialized and a method to get current XP
-    // These parts might need to be adjusted based on the actual implementation of LevelSystem
+    // Check if LevelSystem is initialized
     if (!LevelSystem.isInitialized) {
-      return Scaffold(
+      return const Scaffold(
         body: Center(child: CircularProgressIndicator()), // Loading indicator
       );
     }
 
-    // Use the new methods for level and XP calculations
+    // Calculate some level values
     int currentLevel = LevelSystem.calculateLevel(LevelSystem.xp);
     int xpNeededForNextLevel = LevelSystem.xpForNextLevel();
     int currentLevelXP = LevelSystem.currentLevelProgress();
@@ -27,21 +26,21 @@ class _ProfilePageState extends State<ProfilePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        title: const Text('Profile'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('Level: $currentLevel', style: TextStyle(fontSize: 24)),
-            SizedBox(height: 20),
+            Text('Level: $currentLevel', style: const TextStyle(fontSize: 24)),
+            const SizedBox(height: 20),
             LinearProgressIndicator(
               value: progress,
               backgroundColor: Colors.grey[200],
               color: Colors.blue,
               minHeight: 20,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text('XP: $currentLevelXP / ${xpNeededForNextLevel + currentLevelXP}', style: TextStyle(fontSize: 16)),
             //test button to add xp
             ElevatedButton(
@@ -50,7 +49,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   LevelSystem.addXp(10);
                 });
               },
-              child: Text('Add XP'),
+              child:const Text('Add XP'),
             ),
           ],
         ),

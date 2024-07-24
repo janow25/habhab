@@ -13,8 +13,8 @@ class HabHab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: const BottomNavigationBarMenu(),
+    return const MaterialApp(
+      home: BottomNavigationBarMenu(),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -41,7 +41,7 @@ class _BottomNavigationBarMenuState extends State<BottomNavigationBarMenu> {
   static const List<Widget> _pages = <Widget>[
     StartPage(),
     ShopPage(),
-    ProfilePage(), // Adjusted to not require LevelSystem instance
+    ProfilePage(),
     SettingsPage(),
   ];
 
@@ -87,11 +87,10 @@ class _BottomNavigationBarMenuState extends State<BottomNavigationBarMenu> {
 }
 
 class SettingsPage extends StatelessWidget {
-  const SettingsPage({Key? key}) : super(key: key);
+  const SettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Implementation for Settings Page
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
@@ -100,12 +99,12 @@ class SettingsPage extends StatelessWidget {
         children: [
           const ListTile(
             title: Text('Reset Level'),
-            onTap: LevelSystem.reset, // Reset the level
+            onTap: LevelSystem.reset,
             trailing: Icon(Icons.refresh),
           ),
           ListTile(
             title: const Text('Reset Coins'),
-            onTap: resetCoins, // Add 10 coins
+            onTap: resetCoins,
             trailing: const Icon(Icons.refresh),
           ),
           ListTile(
@@ -120,23 +119,20 @@ class SettingsPage extends StatelessWidget {
                       children: [
                         CheckboxListTile(
                           title: const Text('Enable Notifications'),
-                          value: false, // Replace with actual value
+                          value: false,
                           onChanged: (bool? value) {
-                            // TODO: Implement logic to handle checkbox value change
                           },
                         ),
                         CheckboxListTile(
                           title: const Text('Enable Sound'),
-                          value: false, // Replace with actual value
+                          value: false,
                           onChanged: (bool? value) {
-                            // TODO: Implement logic to handle checkbox value change
                           },
                         ),
                         CheckboxListTile(
                           title: const Text('Enable Vibration'),
-                          value: false, // Replace with actual value
+                          value: false,
                           onChanged: (bool? value) {
-                            // TODO: Implement logic to handle checkbox value change
                           },
                         ),
                       ],
@@ -150,7 +146,6 @@ class SettingsPage extends StatelessWidget {
                       ),
                       TextButton(
                         onPressed: () {
-                          // TODO: Implement logic to save notification settings
                           Navigator.of(context).pop();
                         },
                         child: const Text('Save'),
